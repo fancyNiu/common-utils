@@ -63,7 +63,7 @@ public class MysqlData {
     private String jsonToCondition(JSONObject json){
         StringBuffer sql = new StringBuffer();
         json.forEach((key,value) -> sql.append("'").append(key).append("' = '").append(value).append("' and "));
-        return sql.delete(sql.length()-5,sql.length()-1).toString();
+        return sql.delete(sql.length()-5,sql.length()).toString();
     }
 
     /**将对象转为insert类型的可执行的sql语句*/
@@ -129,7 +129,7 @@ public class MysqlData {
     /**将对象转为delete类型的可执行的sql语句*/
     public String toDeleteSql(){
         StringBuffer sqlBuffer = new StringBuffer("Delete FROM ");
-        sqlBuffer.append(table).append(" ");
+        sqlBuffer.append(table);
         try {
             //拼接where语句
             if(!where.isEmpty()){

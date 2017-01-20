@@ -2,9 +2,9 @@ package com.fancy.automation.model;
 
 
 import com.alibaba.fastjson.JSONObject;
-import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created by puhui on 2017/1/19.
@@ -13,7 +13,7 @@ public class MysqlDataTest {
 
     private  MysqlData mysqlData = new MysqlData();
 
-    @BeforeTest
+    @Before
     public void init(){
         JSONObject insert = new JSONObject();
         insert.put("create_time","2050-11-12 13:00:00");
@@ -28,6 +28,7 @@ public class MysqlDataTest {
         mysqlData.setTable("app_antifraud");
         mysqlData.setInsert(insert);
         mysqlData.setUpdate(update);
+        mysqlData.setWhere(where);
     }
 
 
@@ -36,14 +37,21 @@ public class MysqlDataTest {
         String expect = "INSERT INTO app_antifraud ('create_time','name') values ('2050-11-12 13:00:00','nrf')";
         String actual = mysqlData.toInsertSql();
         System.out.println(actual);
-        Assert.assertEquals(actual.toLowerCase(),expect.toLowerCase(),"ok");
+        Assert.assertEquals("cuole",expect.toLowerCase(),actual.toLowerCase());
     }
 
     @Test
     public void testToUpdateSql(){
-        String expect = "update app_antifraud set 'create_time'='2050-11-12 13:00:00' and 'name'='zjy'" +
-                " where 'id'=1 and 'create_time','2017-01-17 15:56:53'";
+        String expect = "update app_antifraud set 'create_time' = '2050-11-12 13:00:00' and 'name' = 'zjy'" +
+                " where 'create_time' = '2017-01-17 15:56:53' and 'id' = '1'";
         String actual = mysqlData.toUpdateSql();
-        Assert.assertEquals(actual.toLowerCase(),expect.toLowerCase(),"cuole");
+        Assert.assertEquals("cuole",expect.toLowerCase(),actual.toLowerCase());
+    }
+
+    @Test
+    public void testToDeleteSql(){
+        String expect = "delete from app_antifraud where 'create_time' = '2017-01-17 15:56:53' and 'id' = '1'";
+        String actual = mysqlData.toDeleteSql();
+        Assert.assertEquals("cuole",expect.toLowerCase(),actual.toLowerCase());
     }
 }

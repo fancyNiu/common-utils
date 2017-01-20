@@ -72,13 +72,15 @@ public class MySqlDao {
     }
 
     /**执行sql语句,可以执行insert，update,delete*/
-    private void execSql(String sql){
+    private ResultSet execSql(String sql){
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
             preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return resultSet;
     }
 }
